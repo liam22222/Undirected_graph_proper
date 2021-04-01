@@ -48,26 +48,58 @@ int main() {
     */
 
     std::vector<std::vector<int>> temp_graph;
-    std::vector<float> threshold1, threshold2, threshold3;
-    std::vector<float> match1, match2, match3;
-    unsigned V = 1000, match, graph_amount = 100;
+    std::vector<float> threshold_connectivity, threshold_diameter, threshold_isolated;
+    std::vector<float> match_connectivity, match_diameter, match_isolated;
+    unsigned V = 1000, match=0, graph_amount = 500;
 
-    threshold1 = {0.001,0.002,0.003,0.004,0.005,0.007,0.008,0.009,0.015,0.021};
-    threshold2 = {0.05,0.08,0.099,0.102,0.113,0.119,0.12,0.125,0.13,0.24};
-    threshold3 = {0.0025,0.0035,0.0045,0.055,0.0061,0.02,0.023,0.025,0.030,0.1};
+    threshold_connectivity = {0.001, 0.002, 0.003, 0.004, 0.005, 0.007, 0.008, 0.009, 0.015, 0.021};
+    threshold_diameter = {0.05, 0.08, 0.099, 0.102, 0.113, 0.119, 0.12, 0.125, 0.13, 0.24};
+    threshold_isolated = {0.0025, 0.0035, 0.0045, 0.055, 0.0061, 0.02, 0.023, 0.025, 0.030, 0.1};
 
-    //Checking threshold number one
-    match = 0;
-    for (int probability = 5; probability < threshold1.size(); probability++) {
-        for (int random_graph = 0; random_graph < graph_amount; random_graph++) {
-            temp_graph = build_random_graph(V,threshold1[probability]);
+    //Checking for "Connectivity" property
+/*
+    std::cout << "Checking for Connectivity property\n";
+    for (int probability = 0; probability < threshold_connectivity.size(); probability++) {
+        for (int graph_number = 0; graph_number < graph_amount; graph_number++) {
+            temp_graph = build_random_graph(V, threshold_connectivity[probability]);
             if (connectivity(temp_graph)){ match++; }
         }
-
-        match1.push_back(float(match/float(graph_amount)));
-        std::cout << match1.back() << "\n";
+        std::cout << "For probability " << threshold_connectivity[probability] <<
+                  " There are " << match << " graphs that are connected";
+        match_connectivity.push_back(float(match / float(graph_amount)));
         match = 0;
     }
-    print_vector(match1);
 
+    //Checking for "Diameter" property
+    std::cout << "Checking for Diameter property\n";
+    for (int probability = 0; probability < threshold_diameter.size(); probability++) {
+        for (int graph_number = 0; graph_number < graph_amount; graph_number++) {
+            std::cout << "\nGraph number " << graph_number << "\n";
+            temp_graph = build_random_graph(V, threshold_diameter[probability]);
+            if (diameter(temp_graph,V) == 2){ match++; }
+        }
+        std::cout << "\nFor probability " << threshold_diameter[probability] <<
+                  " There are " << match << " graphs that their diameter is equal 2";
+        match_diameter.push_back(float(match / float(graph_amount)));
+        match = 0;
+    }
+*/
+    //Checking for "Isolated" property
+    std::cout << "Checking for Isolated property\n";
+    for (int probability = 0; probability < threshold_isolated.size(); probability++) {
+        for (int graph_number = 0; graph_number < graph_amount; graph_number++) {
+            temp_graph = build_random_graph(V, threshold_isolated[probability]);
+            if (is_isolated(temp_graph)){ match++; }
+        }
+        std::cout << "\nFor probability " << threshold_isolated[probability] <<
+                  " There are " << match << " graphs that have an isolated vertex";
+        match_isolated.push_back(float(match / float(graph_amount)));
+        match = 0;
+    }
+
+    /*
+    print_vector(match_connectivity);
+    print_vector(match_diameter);
+    print_vector(match_isolated);
+    */
 }

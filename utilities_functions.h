@@ -40,7 +40,6 @@ std::vector<std::vector<int>> build_random_graph(const unsigned &V, const float 
  */
 void print_vector(const std::vector<int> &vec);
 
-
 /*
  * Print vector float
  *
@@ -62,7 +61,6 @@ void print_graph(const std::vector<std::vector<int>> &graph, const unsigned &V);
  * returns nothing
  */
 void combine_vectors(std::vector<int> &vec1, const std::vector<int> &vec2);
-
 
 /* remove_from - The vector I want to remove common elements from
  * compare - The vector that I use to check for match
