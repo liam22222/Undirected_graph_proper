@@ -1,11 +1,36 @@
 #include "utilities_functions.h"
 
 bool probability(const float &p) {
+    if (!p) return false;
+
+    int expo = 0;
+    float p_tmp = p;
+
+    while (p_tmp < 1){
+        p_tmp *= 10;
+        expo += 1;
+    }
+    int rnd = rand() % int(pow(10,expo));
+    return p_tmp >= rnd;
+
+    /*
     int rnd = rand() % 100 + 1;
     return p * 100 > rnd;
+     */
 }
 
 void print_vector(const std::vector<int> &vec){
+    for (int iterator = 0; iterator < vec.size(); iterator++) {
+        if(iterator != vec.size()-1){
+            std::cout << vec[iterator] << ",";
+        } else{
+            std::cout << vec[iterator] << "\n";
+        }
+    }
+    if(vec.empty()){std::cout << "\n";}
+}
+
+void print_vector(const std::vector<float> &vec){
     for (int iterator = 0; iterator < vec.size(); iterator++) {
         if(iterator != vec.size()-1){
             std::cout << vec[iterator] << ",";

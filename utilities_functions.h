@@ -10,6 +10,9 @@
 
 #include <algorithm>
 
+//Use pow function in probability method
+
+#include <math.h>
 /*
  * The function return if a certain probability 'p' occur.
  *
@@ -31,11 +34,19 @@ bool probability(const float &p);
 std::vector<std::vector<int>> build_random_graph(const unsigned &V, const float &p);
 
 /*
- * Print vector
+ * Print vector int
  *
  * A simple function that prints vector.
  */
 void print_vector(const std::vector<int> &vec);
+
+
+/*
+ * Print vector float
+ *
+ * A simple function that prints vector.
+ */
+void print_vector(const std::vector<float> &vec);
 
 /*
  * Print Graph
