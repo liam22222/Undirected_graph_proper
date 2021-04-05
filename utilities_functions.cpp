@@ -3,20 +3,8 @@
 bool probability(const float &p) {
     if (!p) return false;
 
-    int expo = 0;
-    float p_tmp = p;
-
-    while (p_tmp < 1){
-        p_tmp *= 10;
-        expo += 1;
-    }
-    int rnd = rand() % int(pow(10,expo));
-    return p_tmp >= rnd;
-
-    /*
-    int rnd = rand() % 100 + 1;
-    return p * 100 > rnd;
-     */
+    float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    return p > r;
 }
 
 void print_vector(const std::vector<int> &vec){
@@ -70,7 +58,7 @@ void print_graph(const std::vector<std::vector<int>> &graph, const unsigned int 
     std::cout << "Graph: \n";
 
     for (int vertex = 0; vertex < V; vertex++) {
-        std::cout << vertex << ": ";
+        std::cout << vertex << "(" << graph[vertex].size() <<"): ";
         print_vector(graph[vertex]);
     }
 }
@@ -117,6 +105,9 @@ std::pair<int,int> BFS(const std::vector<std::vector<int>> &graph , const unsign
         for (int neighbor = 0; neighbor < neighbors.size(); neighbor++) {
             PI.push_back(PI[ver] + 1);
         }
+        if (Q.size() == V){
+            return std::make_pair(Q.back(),PI.back());
+        }
     }
 
     //Return the furhest vertex from "vertex" if every vertex has been visited.
@@ -127,21 +118,46 @@ std::pair<int,int> BFS(const std::vector<std::vector<int>> &graph , const unsign
 
 unsigned diameter(const std::vector<std::vector<int>> &graph, const unsigned int &V) {
     //Generate a random vertex
-    int random_vertex = rand() % V;
+    int max_distance = 0,random_vertex = rand() % V, count = 0;
     std::pair<int , int > vertex_distance;
 
     //Calling BFS on this vertex
     vertex_distance = BFS(graph,V,random_vertex);
 
     //If vertex distance is -1 then the graph is not connected and diameter equal -1
-    if (vertex_distance.first == -1) return -1;
+    if (vertex_distance.first == -1) {
+        std::cout << "The Graph is unconnected, which mean is diameter is -1 (infinity)";
+        return -1;
+    }
 
-    //Now that we know we have a connected graph it is time to find w such that w and u are the furhest.
+    //We also need to find only those which the diameter is equal to two. so for each graph that is diameter bigger from 2 we will return -1.
+    if (vertex_distance.second > 2){
+        std::cout << "The graph diameter is bigger than 2 which mean he is not fit.";
+        return -2;
+    }
+
+    //Now that we know we have a connected graph it is time to find v such that v and u are the furhest.
+    //If for 10 BFS on diff vertexes we got result of diameter 2 we return 2
+    max_distance = vertex_distance.second;
+    for (int vertex = 0; vertex < V; vertex++) {
+        vertex_distance = BFS(graph,V,vertex);
+        if (vertex_distance.second > max_distance) {
+            max_distance = vertex_distance.second;
+            std::cout<<"\nVertex : " << vertex <<"\nLongest-Shortest : " << max_distance << "\n";
+        }
+        if (max_distance > 2){
+            std::cout << "The graph diameter is bigger than 2 which mean he is not fit. Vertex number - " << vertex;
+            return max_distance;
+        }
+    }
+    /*
     std::cout << std::endl << "The most far vertexes are : " << vertex_distance.first;
     vertex_distance = BFS(graph,V,vertex_distance.first);
     std::cout << "-->" << vertex_distance.first << " with diameter of : " << vertex_distance.second;
-
-    return vertex_distance.second;
+    */
+    //Return diameter
+    std::cout<<"Graph diameter is : " << max_distance;
+    return max_distance;
 
 }
 

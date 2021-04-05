@@ -13,6 +13,10 @@
 //Use pow function in probability method
 
 #include <math.h>
+
+//Use random
+
+#include <random>
 /*
  * The function return if a certain probability 'p' occur.
  *
