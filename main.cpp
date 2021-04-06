@@ -30,15 +30,18 @@ int main() {
      *  ln(V)/V ≈ 0.00690
      *  sqrt(2ln(V)/V) ≈ 0.11753
     */
-
+    std::ofstream myCSV;
     std::vector<std::vector<int>> temp_graph;
     std::vector<float> threshold_connectivity, threshold_diameter, threshold_isolated;
     std::vector<float> match_connectivity, match_diameter, match_isolated;
+    std::string file_name = "graph_data";
     unsigned V = 1000, match=0, graph_amount = 500;
 
+    //Open graph_data.csv
     threshold_connectivity = {0.001, 0.002, 0.003, 0.004, 0.005, 0.007, 0.008, 0.009, 0.015, 0.021};
     threshold_diameter = {0.005, 0.008, 0.0099, 0.0102, 0.113, 0.11760, 0.118, 0.1185, 0.119, 0.120};
     threshold_isolated = {0.0025, 0.0035, 0.0045, 0.055, 0.0061, 0.02, 0.023, 0.025, 0.030, 0.040};
+
 
     //Checking for "Connectivity" property
     std::cout << "Checking for Connectivity property\n";
@@ -55,8 +58,16 @@ int main() {
         match = 0;
     }
 
+    //Write connectivity to CSV
+    myCSV << "Connectivity :\n";
+    vector_to_CSV(myCSV,file_name,threshold_connectivity);
+    myCSV << "\n";
+    vector_to_CSV(myCSV,file_name,match_connectivity);
+
+    print_vector(match_connectivity);
+
     //Checking for "Diameter" property
-    std::cout << "Checking for Diameter property\n";
+    std::cout << "\nChecking for Diameter property\n";
     for (int probability = 0; probability < threshold_diameter.size(); probability++) {
         std::cout << "\nWith probability p : " << threshold_diameter[probability] << "\n";
         for (int graph_number = 0; graph_number < graph_amount; graph_number++) {
@@ -71,8 +82,15 @@ int main() {
         match = 0;
     }
 
+    myCSV << "Diameter :\n";
+    vector_to_CSV(myCSV,file_name,threshold_diameter);
+    myCSV << "\n";
+    vector_to_CSV(myCSV,file_name,match_diameter);
+
+    print_vector(match_diameter);
+
     //Checking for "Isolated" property
-    std::cout << "Checking for Isolated property\n";
+    std::cout << "\nChecking for Isolated property\n";
     for (int probability = 0; probability < threshold_isolated.size(); probability++) {
         for (int graph_number = 0; graph_number < graph_amount; graph_number++) {
             temp_graph = build_random_graph(V, threshold_isolated[probability]);
@@ -84,8 +102,9 @@ int main() {
         match = 0;
     }
 
-    print_vector(match_connectivity);
-    print_vector(match_diameter);
+    myCSV << "Isolated :\n";
+    vector_to_CSV(myCSV,file_name,threshold_isolated);
+    myCSV << "\n";
+    vector_to_CSV(myCSV,file_name,match_isolated);
     print_vector(match_isolated);
-
 }

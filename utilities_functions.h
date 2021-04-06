@@ -12,11 +12,16 @@
 
 //Use pow function in probability method
 
-#include <math.h>
+#include <cmath>
 
-//Use random
+//Use random for probability
 
 #include <random>
+
+//Write into files
+
+#include <fstream>
+
 /*
  * The function return if a certain probability 'p' occur.
  *
@@ -43,6 +48,11 @@ std::vector<std::vector<int>> build_random_graph(const unsigned &V, const float 
  * A simple function that prints vector.
  */
 void print_vector(const std::vector<int> &vec);
+
+/*
+ * Write vector to CSV
+ */
+void vector_to_CSV(std::ofstream &file, const std::string &file_name, const std::vector<float> &vec);
 
 /*
  * Print vector float
@@ -76,7 +86,7 @@ void remove_common(std::vector<int> & remove_from, const std::vector<int> & comp
 /*
  * BFS
  *
- * Using the BFS algorithm, what this function does is to return the furhest vertex from a given vertex.
+ * Using the BFS algorithm, what this function does is to return the farthest vertex from a given vertex.
  * We don't need to return the distance of every vertex because we only
  * using this function to find out diameter of a graph.
  */
@@ -88,8 +98,8 @@ std::pair<int,int> BFS(const std::vector<std::vector<int>> &graph , const unsign
  * The function using BFS algorithm and return the largest shortest path between two vertexes, also known as diameter.
  * To keep it effective as possible, we will use a technique to find diameter that uses only two iterations of BFS.
  *
- * what it does, is to apply a BFS on a random vertex v, and find the furhest vertex u from it.
- * Once its done, we will run again the BFS function but this time on vertex u and find the furhest vertex from it w.
+ * what it does, is to apply a BFS on a random vertex v, and find the farthest vertex u from it.
+ * Once its done, we will run again the BFS function but this time on vertex u and find the farthest vertex from it w.
  * We can now say, that (u,w) are the diameter of the graph.
  *
  * I have got the idea from this article:

@@ -1,7 +1,7 @@
 #include "utilities_functions.h"
 
 bool probability(const float &p) {
-    if (!p) return false;
+    if (p == 0) return false;
 
     float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
     return p > r;
@@ -34,7 +34,8 @@ std::vector<std::vector<int>> build_random_graph(const unsigned &V, const float 
     std::vector<std::vector<int>> graph;
     std::vector<int> vec_temp = {};
 
-    //initializing the graph
+    //initializing the graph. Reserve function request for at least V in capacity
+    graph.reserve(V);
     for (int vertex = 0; vertex < V; vertex++) {
         graph.push_back(vec_temp);
     }
@@ -110,7 +111,7 @@ std::pair<int,int> BFS(const std::vector<std::vector<int>> &graph , const unsign
         }
     }
 
-    //Return the furhest vertex from "vertex" if every vertex has been visited.
+    //Return the farthest vertex from "vertex" if every vertex has been visited.
     //If there is vertex that has not been visited, we can say the graph is not connected and return -1
     if (Q.size() != V) return std::make_pair(-1,-1);
     else return std::make_pair(Q.back(),PI.back());
@@ -118,7 +119,8 @@ std::pair<int,int> BFS(const std::vector<std::vector<int>> &graph , const unsign
 
 unsigned diameter(const std::vector<std::vector<int>> &graph, const unsigned int &V) {
     //Generate a random vertex
-    int max_distance = 0,random_vertex = rand() % V, count = 0;
+    int max_distance;
+    unsigned int random_vertex = rand() % V;
     std::pair<int , int > vertex_distance;
 
     //Calling BFS on this vertex
@@ -136,10 +138,11 @@ unsigned diameter(const std::vector<std::vector<int>> &graph, const unsigned int
         return -2;
     }
 
-    //Now that we know we have a connected graph it is time to find v such that v and u are the furhest.
+    //Now that we know we have a connected graph it is time to find v such that v and u are the farthest.
     //If for 10 BFS on diff vertexes we got result of diameter 2 we return 2
     max_distance = vertex_distance.second;
     for (int vertex = 0; vertex < V; vertex++) {
+        std::cout<<"\nVertex: " << vertex;
         vertex_distance = BFS(graph,V,vertex);
         if (vertex_distance.second > max_distance) {
             max_distance = vertex_distance.second;
@@ -150,11 +153,7 @@ unsigned diameter(const std::vector<std::vector<int>> &graph, const unsigned int
             return max_distance;
         }
     }
-    /*
-    std::cout << std::endl << "The most far vertexes are : " << vertex_distance.first;
-    vertex_distance = BFS(graph,V,vertex_distance.first);
-    std::cout << "-->" << vertex_distance.first << " with diameter of : " << vertex_distance.second;
-    */
+
     //Return diameter
     std::cout<<"Graph diameter is : " << max_distance;
     return max_distance;
@@ -178,4 +177,14 @@ bool connectivity(std::vector<std::vector<int>> &graph) {
 
 }
 
-
+void vector_to_CSV(std::ofstream &file, const std::string &file_name, const std::vector<float> &vec){
+    file.open(file_name,std::ios_base::app);
+    for (int iterator = 0; iterator < vec.size(); iterator++) {
+        if (iterator != vec.size() - 1)
+            file << vec[iterator] << ',';
+        else
+            file << vec[iterator];
+    }
+    file << '\n';
+    file.close();
+}
