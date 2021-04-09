@@ -40,7 +40,7 @@ int main() {
     //Open graph_data.csv
     threshold_connectivity = {0.001, 0.002, 0.003, 0.004, 0.005, 0.007, 0.008, 0.009, 0.015, 0.021};
     threshold_diameter = {0.005, 0.008, 0.0099, 0.0102, 0.113, 0.11760, 0.118, 0.1185, 0.119, 0.120};
-    threshold_isolated = {0.0025, 0.0035, 0.0045, 0.055, 0.0061, 0.02, 0.023, 0.025, 0.030, 0.040};
+    threshold_isolated = {0.0025, 0.0035, 0.0045, 0.0053, 0.0061, 0.0070, 0.0073, 0.00795, 0.009, 0.01};
 
 
     //Checking for "Connectivity" property
@@ -86,7 +86,6 @@ int main() {
     vector_to_CSV(myCSV,file_name,threshold_diameter);
     myCSV << "\n";
     vector_to_CSV(myCSV,file_name,match_diameter);
-
     print_vector(match_diameter);
 
     //Checking for "Isolated" property
@@ -107,4 +106,5 @@ int main() {
     myCSV << "\n";
     vector_to_CSV(myCSV,file_name,match_isolated);
     print_vector(match_isolated);
+
 }

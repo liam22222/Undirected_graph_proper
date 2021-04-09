@@ -88,22 +88,17 @@ void remove_common(std::vector<int> & remove_from, const std::vector<int> & comp
  *
  * Using the BFS algorithm, what this function does is to return the farthest vertex from a given vertex.
  * We don't need to return the distance of every vertex because we only
- * using this function to find out diameter of a graph.
+ * using this function to find out diameter of a graph and whether the graph is connected or not.
  */
 std::pair<int,int> BFS(const std::vector<std::vector<int>> &graph , const unsigned &V, const unsigned &vertex);
 
 /*
  * Diameter
  *
- * The function using BFS algorithm and return the largest shortest path between two vertexes, also known as diameter.
- * To keep it effective as possible, we will use a technique to find diameter that uses only two iterations of BFS.
+ * The function using BFS algorithm and return the "largest shortest" path between two vertexes, also known as diameter.
+ * Sadly saying, the efficiency of this function is V*(V*E) => V*E since V*V is negligible.
  *
- * what it does, is to apply a BFS on a random vertex v, and find the farthest vertex u from it.
- * Once its done, we will run again the BFS function but this time on vertex u and find the farthest vertex from it w.
- * We can now say, that (u,w) are the diameter of the graph.
- *
- * I have got the idea from this article:
- * https://cs.stackexchange.com/questions/194/the-time-complexity-of-finding-the-diameter-of-a-graph
+ * What the function does is to use BFS on each vertex and find out which two vertexes have the highest distance between them.
  */
 unsigned diameter(const std::vector<std::vector<int>> &graph, const unsigned &V);
 

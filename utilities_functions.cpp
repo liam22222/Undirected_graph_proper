@@ -132,25 +132,13 @@ unsigned diameter(const std::vector<std::vector<int>> &graph, const unsigned int
         return -1;
     }
 
-    //We also need to find only those which the diameter is equal to two. so for each graph that is diameter bigger from 2 we will return -1.
-    if (vertex_distance.second > 2){
-        std::cout << "The graph diameter is bigger than 2 which mean he is not fit.";
-        return -2;
-    }
-
     //Now that we know we have a connected graph it is time to find v such that v and u are the farthest.
-    //If for 10 BFS on diff vertexes we got result of diameter 2 we return 2
     max_distance = vertex_distance.second;
     for (int vertex = 0; vertex < V; vertex++) {
-        std::cout<<"\nVertex: " << vertex;
         vertex_distance = BFS(graph,V,vertex);
         if (vertex_distance.second > max_distance) {
             max_distance = vertex_distance.second;
             std::cout<<"\nVertex : " << vertex <<"\nLongest-Shortest : " << max_distance << "\n";
-        }
-        if (max_distance > 2){
-            std::cout << "The graph diameter is bigger than 2 which mean he is not fit. Vertex number - " << vertex;
-            return max_distance;
         }
     }
 
