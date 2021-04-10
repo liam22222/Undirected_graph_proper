@@ -2,8 +2,6 @@
 
 #include "utilities_functions.h"
 
-
-
 int main() {
     /* In here, we will test few properties of a random graph with 1000 vertexes (V = 1000).
      * We will also declare p, that stands for the probability that two indexes (v,u) belong to E
@@ -35,9 +33,9 @@ int main() {
     std::vector<float> threshold_connectivity, threshold_diameter, threshold_isolated;
     std::vector<float> match_connectivity, match_diameter, match_isolated;
     std::string file_name = "graph_data";
-    unsigned V = 1000, match=0, graph_amount = 500;
+    unsigned V = 1000, match = 0, graph_amount = 500;
 
-    //Open graph_data.csv
+    //Creating threshold probabilities.
     threshold_connectivity = {0.001, 0.002, 0.003, 0.004, 0.005, 0.007, 0.008, 0.009, 0.015, 0.021};
     threshold_diameter = {0.005, 0.008, 0.0099, 0.0102, 0.113, 0.11760, 0.118, 0.1185, 0.119, 0.120};
     threshold_isolated = {0.0025, 0.0035, 0.0045, 0.0053, 0.0061, 0.0070, 0.0073, 0.00795, 0.009, 0.01};
@@ -106,5 +104,4 @@ int main() {
     myCSV << "\n";
     vector_to_CSV(myCSV,file_name,match_isolated);
     print_vector(match_isolated);
-
 }
