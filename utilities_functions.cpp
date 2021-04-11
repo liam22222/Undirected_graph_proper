@@ -50,6 +50,7 @@ std::vector<std::vector<int>> build_random_graph(const unsigned &V, const float 
                 graph[vertex_sec].push_back(vertex);
             }
         }
+        graph[vertex].shrink_to_fit();
     }
 
     return graph;

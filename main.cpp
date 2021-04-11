@@ -28,6 +28,7 @@ int main() {
      *  ln(V)/V ≈ 0.00690
      *  sqrt(2ln(V)/V) ≈ 0.11753
     */
+
     std::ofstream myCSV;
     std::vector<std::vector<int>> temp_graph;
     std::vector<float> threshold_connectivity, threshold_diameter, threshold_isolated;
